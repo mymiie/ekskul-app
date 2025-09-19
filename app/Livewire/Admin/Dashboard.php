@@ -4,10 +4,10 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 
-class Dashbord extends Component
+class Dashboard extends Component
 {
     public function render()
     {
-        return view('livewire.admin.dashbord');
+        return view('liveware.admin.dashbord');
     }
 }

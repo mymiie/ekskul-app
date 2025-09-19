@@ -5,15 +5,27 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GuruController;
+use App\Livewire\Auth\Login;
+use App\Livewire\Auth\Register; 
+use App\Livewire\Auth\Forgotpassword;
+
 
 // Public routes
 Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login')->middleware('guest');
+Route::get('/login', Login::class)->name('login')->middleware('guest');
+
+// ---- TAMBAHKAN KODE DI BAWAH INI ----
+Route::get('/register', Register::class)->name('register')->middleware('guest');
+
+// Forgot Password
+Route::get('/forgot-password', ForgotPassword::class)
+    ->name('password.request')
+    ->middleware('guest');
+
+// ... sisa kode tidak berubah
 
 Route::post('/logout', function () {
     auth()->logout();
@@ -21,13 +33,13 @@ Route::post('/logout', function () {
 })->name('logout');
 
 // User/Siswa routes
-Route::middleware(['auth', 'role:user'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
-        return view('user.dashboard');
+        return view('dashboard');
     })->name('user.dashboard');
     
     Route::get('/ekskul', function () {
-        return view('user.ekskul-list');
+        return view('user.ekskul-list'); 
     })->name('user.ekskul');
     
     Route::get('/my-registrations', function () {
@@ -71,3 +83,4 @@ Route::middleware(['auth'])->group(function () {
         return view('profile.edit');
     })->name('profile.edit');
 });
+

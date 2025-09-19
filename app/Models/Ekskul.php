@@ -24,42 +24,9 @@ class Ekskul extends Model
         'status_aktif' => 'boolean',
     ];
 
-    // Relationships
-    public function guru()
-    {
-        return $this->belongsTo(User::class, 'guru_id');
-    }
-
+    // Relasi: Satu Ekskul punya banyak Pendaftar
     public function pendaftarans()
     {
-        return $this->hasMany(Pendaftarans::class);
-    }
-
-    public function peserta()
-    {
-        return $this->belongsToMany(User::class, 'pendaftarans')
-                    ->withPivot('status', 'tanggal_daftar', 'alasan_daftar')
-                    ->withTimestamps();
-    }
-
-    public function pesertaDiterima()
-    {
-        return $this->peserta()->wherePivot('status', 'diterima');
-    }
-
-    // Helper methods
-    public function getJumlahPeserta()
-    {
-        return $this->pesertaDiterima()->count();
-    }
-
-    public function isFull()
-    {
-        return $this->getJumlahPeserta() >= $this->max_peserta;
-    }
-
-    public function canRegister()
-    {
-        return $this->status_aktif && !$this->isFull();
+        return $this->hasMany(Pendaftaran::class);
     }
 }

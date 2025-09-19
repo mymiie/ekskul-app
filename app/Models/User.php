@@ -42,14 +42,14 @@ class User extends Authenticatable
         return $this->hasMany(Ekskul::class, 'guru_id');
     }
 
-    public function pendaftarans()
+    public function pendaftaran()
     {
-        return $this->hasMany(Pendaftarans::class);
+        return $this->hasMany(Pendaftaran::class);
     }
 
     public function ekskulYangDiikuti()
     {
-        return $this->belongsToMany(Ekskul::class, 'pendaftarans')
+        return $this->belongsToMany(Ekskul::class, 'pendaftaran')
                     ->withPivot('status', 'tanggal_daftar', 'alasan_daftar')
                     ->withTimestamps();
     }
